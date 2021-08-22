@@ -1,7 +1,7 @@
 // TODO: Include packages needed for this application
 const { prompt } = require('inquirer');
 const { writeFile } = require('fs');
-const { promisify } = require('util');
+// const { promisify } = require('util');
 
 console.log('Welcome to the README generator!')
 
@@ -25,8 +25,8 @@ function writeToFile(fileName, data) {
     });
 }
 
-// Reference: https://www.npmjs.com/package/util.promisify
-const writeFileAsync = util.promisify(writeToFile);
+// Reference: https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original
+// const writeFileAsync = util.promisify(writeToFile);
 
 // TODO: Create a function to initialize app
 function init() {}
