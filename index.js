@@ -1,18 +1,18 @@
 // TODO: Include packages needed for this application
-const { prompt } = require('inquirer');
-const { writeFile } = require('fs');
-// const { promisify } = require('util');
+const fs = require('fs');
+const inquirer = require('inquirer');
+const util = require('util');
 
 console.log('Welcome to the README generator!')
 
-// Array of questions used to generate readme
+// Import array of questions used to generate readme
 const questions = require('./lib/questions');
 
-// readme template
+// Import readme template
 const generateMarkdown = require('./lib/generateMarkdown');
 
 function promptQuestions() {
-    return prompt(questions);
+    return inquirer.prompt(questions);
 }
 
 // function to write README
@@ -26,10 +26,24 @@ function writeToFile(fileName, data) {
 }
 
 // Reference: https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original
-// const writeFileAsync = util.promisify(writeToFile);
+const writeFileAsync = util.promisify(writeToFile);
 
 // TODO: Create a function to initialize app
-function init() {}
+async function init() {
+    try {
+        const data = await promptQuestions();
+
+        console.log(JSON.stringify(data, null, '\t'));
+        
+        const readme = generateMarkdown(data);
+
+        await writeFileAsync('README.md', readme);
+
+        console.log('Success!')
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 // Function call to initialize app
 init();
