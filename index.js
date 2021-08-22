@@ -1,13 +1,36 @@
 // TODO: Include packages needed for this application
+const { prompt } = require('inquirer');
+const { writeFile } = require('fs');
+const { promisify } = require('util');
 
-// TODO: Create an array of questions for user input
+console.log('Welcome to the README generator!')
+
+// Array of questions used to generate readme
 const questions = require('./lib/questions');
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+// readme template
+const generateMarkdown = require('./lib/generateMarkdown');
+
+function promptQuestions() {
+    return prompt(questions);
+}
+
+// function to write README
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, err => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log('Your markdown file has been created.')
+    });
+}
+
+// Reference: https://www.npmjs.com/package/util.promisify
+const writeFileAsync = util.promisify(writeToFile);
 
 // TODO: Create a function to initialize app
 function init() {}
 
 // Function call to initialize app
 init();
+
